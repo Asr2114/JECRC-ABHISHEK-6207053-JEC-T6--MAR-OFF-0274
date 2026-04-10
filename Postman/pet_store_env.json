@@ -1,0 +1,16 @@
+{
+	"id": "4e38b80b-4656-450e-b44a-bb749ee6dcff",
+	"name": "pet_env",
+	"values": [
+		{
+			"key": "base_url",
+			"value": "https://petstore.swagger.in/v2",
+			"type": "default",
+			"enabled": true
+		}
+	],
+	"color": null,
+	"_postman_variable_scope": "environment",
+	"_postman_exported_at": "2026-04-10T09:02:33.977Z",
+	"_postman_exported_using": "Postman/12.5.4"
+}

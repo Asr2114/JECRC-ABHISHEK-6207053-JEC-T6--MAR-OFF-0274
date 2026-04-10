@@ -1,0 +1,840 @@
+{
+  "info": {
+    "_postman_id": "a1ebc9bf-de82-4e64-b5ee-3f0a45aaaa54",
+    "name": "Shopper Stack",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "20981746",
+    "_collection_link": "https://go.postman.co/collection/20981746-a1ebc9bf-de82-4e64-b5ee-3f0a45aaaa54?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Shopper Profile",
+      "item": [
+        {
+          "name": "Add Shopper",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 201\", function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});",
+                  "",
+                  "let res = pm.response.json();",
+                  "",
+                  "let shopperId = res.data.userId;",
+                  "",
+                  "pm.environment.set(\"shopperId\", shopperId);",
+                  "",
+                  "let email = res.data.email;",
+                  "",
+                  "pm.environment.set(\"shopperEmail\", email);",
+                  "",
+                  "pm.environment.set(\"shopperPwd\", \"abhishek21\");",
+                  "",
+                  "",
+                  "",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"city\": \"Jaipur\",\n  \"country\": \"India\",\n  \"email\": \"rajawat1302@gmail.com\",\n  \"firstName\": \"Abhishek\",\n  \"gender\": \"MALE\",\n  \"lastName\": \"Singh\",\n  \"password\": \"abhishek21\",\n  \"phone\": 9166795292,\n  \"state\": \"Rajasthan\",\n  \"zoneId\": \"ALPHA\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/shoppers?zoneId=ALPHA",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "shoppers"
+              ],
+              "query": [
+                {
+                  "key": "zoneId",
+                  "value": "ALPHA"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login Shopper",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "let res = pm.response.json",
+                  "",
+                  "let token = res.data.jwtToken",
+                  "",
+                  "pm.environment.set(\"jwtToken\", token);",
+                  "",
+                  "pm.test(\"validate schema\", function(){",
+                  "    const schema = {",
+                  "        type: \"object\",",
+                  "        properties: \"\"",
+                  "    }",
+                  "})"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"{{shopperEmail}}\",\n    \"password\": \"{{shopperPwd}}\",\n    \"role\": \"SHOPPER\"\n    \n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/users/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login User",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer"
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get shopper",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyYWphd2F0MTMwMkBnbWFpbC5jb20gU0hPUFBFUiIsImV4cCI6MTc3NTc2NDU1NywiaWF0IjoxNzc1NzI4NTU3fQ.FsdTs6icW9C1DCuJb9FutJhLSRhr6pEc5AtzCeOl2qU",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/shoppers/{{shopperId}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "shoppers",
+                "{{shopperId}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "products",
+      "item": [
+        {
+          "name": "get products",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/products/alpha",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "products",
+                "alpha"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Address",
+      "item": [
+        {
+          "name": "Add new Address",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyYWphd2F0MTMwMkBnbWFpbC5jb20gU0hPUFBFUiIsImV4cCI6MTc3NTc2NDU1NywiaWF0IjoxNzc1NzI4NTU3fQ.FsdTs6icW9C1DCuJb9FutJhLSRhr6pEc5AtzCeOl2qU",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"addressId\": 0,\n  \"buildingInfo\": \"82\",\n  \"city\": \"jaipur\",\n  \"country\": \"India\",\n  \"landmark\": \"niwaru\",\n  \"name\": \"abhishek\",\n  \"phone\": \"8989675676\",\n  \"pincode\": \"560029\",\n  \"state\": \"raj\",\n  \"streetInfo\": \"niwaru\",\n  \"type\": \"home\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/shoppers/{{shopperId}}/address",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "shoppers",
+                "{{shopperId}}",
+                "address"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get all address",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyYWphd2F0MTMwMkBnbWFpbC5jb20gU0hPUFBFUiIsImV4cCI6MTc3NTgzMzU1NCwiaWF0IjoxNzc1Nzk3NTU0fQ.wLuYpO8McYLC7fVZTzWgElgEipIwOSaP9WrV8Ik1VVE",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/shoppers/{{shopperId}}/address/153150",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "shoppers",
+                "{{shopperId}}",
+                "address",
+                "153150"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Particular Address",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/shoppers/{{shopperId}}/address/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "shoppers",
+                "{{shopperId}}",
+                "address",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Added Address",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyYWphd2F0MTMwMkBnbWFpbC5jb20gU0hPUFBFUiIsImV4cCI6MTc3NTgzMzU1NCwiaWF0IjoxNzc1Nzk3NTU0fQ.wLuYpO8McYLC7fVZTzWgElgEipIwOSaP9WrV8Ik1VVE",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"addressId\": 0,\n  \"buildingInfo\": \"82\",\n  \"city\": \"jaipur\",\n  \"country\": \"India\",\n  \"landmark\": \"niwaru\",\n  \"name\": \"Ayush\",\n  \"phone\": \"8989675676\",\n  \"pincode\": \"560010\",\n  \"state\": \"raj\",\n  \"streetInfo\": \"niwaru\",\n  \"type\": \"home\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/shoppers/{{shopperId}}/address/153150",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "shoppers",
+                "{{shopperId}}",
+                "address",
+                "153150"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Wishlist",
+      "item": [
+        {
+          "name": "Add to Wishlist",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyYWphd2F0MTMwMkBnbWFpbC5jb20gU0hPUFBFUiIsImV4cCI6MTc3NTc2NDU1NywiaWF0IjoxNzc1NzI4NTU3fQ.FsdTs6icW9C1DCuJb9FutJhLSRhr6pEc5AtzCeOl2qU",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"productId\": 51,\n  \"quantity\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/shoppers/{{shopperId}}/wishlist",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "shoppers",
+                "{{shopperId}}",
+                "wishlist"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get all wishlist product",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyYWphd2F0MTMwMkBnbWFpbC5jb20gU0hPUFBFUiIsImV4cCI6MTc3NTc2NDU1NywiaWF0IjoxNzc1NzI4NTU3fQ.FsdTs6icW9C1DCuJb9FutJhLSRhr6pEc5AtzCeOl2qU",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "{{base_url}}/shoppers/{{shopperId}}/wishlist",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "shoppers",
+                "{{shopperId}}",
+                "wishlist"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete a product from wishlist",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyYWphd2F0MTMwMkBnbWFpbC5jb20gU0hPUFBFUiIsImV4cCI6MTc3NTc2NDU1NywiaWF0IjoxNzc1NzI4NTU3fQ.FsdTs6icW9C1DCuJb9FutJhLSRhr6pEc5AtzCeOl2qU",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/shoppers/{{shopperId}}/wishlist/51",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "shoppers",
+                "{{shopperId}}",
+                "wishlist",
+                "51"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Cart",
+      "item": [
+        {
+          "name": "Add to Cart",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyYWphd2F0MTMwMkBnbWFpbC5jb20gU0hPUFBFUiIsImV4cCI6MTc3NTgzMzU1NCwiaWF0IjoxNzc1Nzk3NTU0fQ.wLuYpO8McYLC7fVZTzWgElgEipIwOSaP9WrV8Ik1VVE",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"productId\": 51,\n  \"quantity\": 2\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/shoppers/{{shopperId}}/carts",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "shoppers",
+                "{{shopperId}}",
+                "carts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Products from Cart",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyYWphd2F0MTMwMkBnbWFpbC5jb20gU0hPUFBFUiIsImV4cCI6MTc3NTgzMzU1NCwiaWF0IjoxNzc1Nzk3NTU0fQ.wLuYpO8McYLC7fVZTzWgElgEipIwOSaP9WrV8Ik1VVE",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "{{base_url}}/shoppers/{{shopperId}}/carts",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "shoppers",
+                "{{shopperId}}",
+                "carts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Item in Cart",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyYWphd2F0MTMwMkBnbWFpbC5jb20gU0hPUFBFUiIsImV4cCI6MTc3NTgzMzU1NCwiaWF0IjoxNzc1Nzk3NTU0fQ.wLuYpO8McYLC7fVZTzWgElgEipIwOSaP9WrV8Ik1VVE",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"productId\": 51,\n  \"quantity\": 3\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/shoppers/{{shopperId}}/carts/480880",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "shoppers",
+                "{{shopperId}}",
+                "carts",
+                "480880"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete a Product",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyYWphd2F0MTMwMkBnbWFpbC5jb20gU0hPUFBFUiIsImV4cCI6MTc3NTgzMzU1NCwiaWF0IjoxNzc1Nzk3NTU0fQ.wLuYpO8McYLC7fVZTzWgElgEipIwOSaP9WrV8Ik1VVE",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "{{base_url}}/shoppers/{{shopperId}}/carts/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "shoppers",
+                "{{shopperId}}",
+                "carts",
+                ""
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Orders",
+      "item": [
+        {
+          "name": "Place an order",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyYWphd2F0MTMwMkBnbWFpbC5jb20gU0hPUFBFUiIsImV4cCI6MTc3NTgzMzU1NCwiaWF0IjoxNzc1Nzk3NTU0fQ.wLuYpO8McYLC7fVZTzWgElgEipIwOSaP9WrV8Ik1VVE",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"address\": {\n    \"addressId\": 153150,\n    \"buildingInfo\": \"82\",\n    \"city\": \"Jaipur\",\n    \"country\": \"India\",\n    \"landmark\": \"Niwaru\",\n    \"name\": \"Abhishek\",\n    \"phone\": \"9898293948\",\n    \"pincode\": \"560010\",\n    \"state\": \"Rajasthan\",\n    \"streetInfo\": \"Niwaru\",\n    \"type\": \"Home\"\n  },\n  \"paymentMode\": \"COD\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/shoppers/{{shopperId}}/orders",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "shoppers",
+                "{{shopperId}}",
+                "orders"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Display Order History",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyYWphd2F0MTMwMkBnbWFpbC5jb20gU0hPUFBFUiIsImV4cCI6MTc3NTgzMzU1NCwiaWF0IjoxNzc1Nzk3NTU0fQ.wLuYpO8McYLC7fVZTzWgElgEipIwOSaP9WrV8Ik1VVE",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "{{base_url}}/shoppers/{{shopperId}}/orders",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "shoppers",
+                "{{shopperId}}",
+                "orders"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Order Status",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyYWphd2F0MTMwMkBnbWFpbC5jb20gU0hPUFBFUiIsImV4cCI6MTc3NTgzMzU1NCwiaWF0IjoxNzc1Nzk3NTU0fQ.wLuYpO8McYLC7fVZTzWgElgEipIwOSaP9WrV8Ik1VVE",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "{{base_url}}/shoppers/{{shopperId}}/orders/72963?status=DELIVERED",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "shoppers",
+                "{{shopperId}}",
+                "orders",
+                "72963"
+              ],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "DELIVERED"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get invoice of order",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyYWphd2F0MTMwMkBnbWFpbC5jb20gU0hPUFBFUiIsImV4cCI6MTc3NTgzMzU1NCwiaWF0IjoxNzc1Nzk3NTU0fQ.wLuYpO8McYLC7fVZTzWgElgEipIwOSaP9WrV8Ik1VVE",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "{{base_url}}/shoppers/{{shopperId}}/orders/72963/invoice",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "shoppers",
+                "{{shopperId}}",
+                "orders",
+                "72963",
+                "invoice"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Review",
+      "item": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": ""
+    }
+  ]
+}
